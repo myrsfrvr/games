@@ -38,6 +38,12 @@ body {
   padding: 4rem;
 }
 
+/* 
+///////////////////////
+// HEADING
+///////////////////////
+*/
+
 .h1 {
   font-size: 8rem;
   text-align: center;
@@ -70,7 +76,17 @@ body {
   /* margin: 2rem; */
 }
 
+/* 
+///////////////////////
+// LEFT SIDE 
+///////////////////////
+*/
+
 .left-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .sequence {
@@ -93,6 +109,12 @@ body {
   border: solid 2px var(--color-text);
 }
 
+/* 
+///////////////////////
+// RIGHT SIDE 
+///////////////////////
+*/
+
 .right-side {
   width: 30%;
 }
@@ -114,7 +136,12 @@ body {
   gap: 1rem;
 }
 
-/* BUTTONS */
+/* 
+///////////////////////
+// BUTTONS
+///////////////////////
+*/
+
 .btn {
   display: inline-block;
   padding: 0.5rem 3rem;
