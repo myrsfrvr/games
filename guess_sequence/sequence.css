@@ -8,11 +8,24 @@ html {
   font-size: 62.5%;
 }
 
-/* как сделать чтобы 1rem = 10px */
+:root {
+  --color-primary: #f5a623;
+  --color-primary-dark: #dd9520;
+  --color-primary-light: #f9ca7b;
+  --color-primary-lighter: #fad391;
+  --color-primary-lightest: #fff6e0;
+
+  --color-text: #1a1446;
+}
+
 body {
   font-family: 'League Spartan', sans-serif;
-  font-size: 1.6rem;
-  background-color: #f0f3fc;
+  font-size: 1.8rem;
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary-lighter),
+    var(--color-primary-light)
+  );
 }
 
 .main-content {
@@ -20,31 +33,31 @@ body {
   margin: 4rem auto;
   border-radius: 10px;
   box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  background-color: var(--color-primary-lightest);
   height: 100%;
-  padding: 3rem;
+  padding: 4rem;
 }
 
 .h1 {
   font-size: 8rem;
   text-align: center;
   margin-bottom: 5rem;
-  color: #1a1446;
+  color: var(--color-text);
 }
 
 /* only if span S */
 /* .h1 span {
-  color: #f5a623;
-  -webkit-text-stroke: 2px #1a1446;
+  color: var(--color-primary);
+  -webkit-text-stroke: 2px var(--color-text);
   font-weight: 700;
 } */
 
 .h1 span {
   display: inline-block;
   padding: 0.5rem 3rem;
-  background-color: #f5a623;
-  color: #1a1446;
-  border: solid 2px #1a1446;
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  border: solid 2px var(--color-text);
   border-radius: 10rem;
   box-shadow: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
 }
@@ -58,28 +71,48 @@ body {
 }
 
 .left-side {
-  background-color: chocolate;
+}
+
+.sequence {
+  font-size: 3rem;
+  color: var(--color-text);
+  font-weight: 700;
+  letter-spacing: 5px;
 }
 
 .right-side {
+  width: 30%;
 }
 
 .input {
   display: inline-block;
+  width: 100%;
   height: 3rem;
+  border: solid 2px var(--color-text);
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+
+  text-align: center;
 }
 
+.btns {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* BUTTONS */
 .btn {
   display: inline-block;
   padding: 0.5rem 3rem;
   cursor: pointer;
 
   font-family: 'League Spartan', sans-serif;
-  color: #1a1446;
+  color: var(--color-text);
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 1px;
-  border: solid 2px #1a1446;
+  border: solid 2px var(--color-text);
   border-radius: 3rem;
   box-shadow: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
 
@@ -96,11 +129,11 @@ body {
 }
 
 .check {
-  background-color: #f5a623;
+  background-color: var(--color-primary);
 }
 
 .check:active {
-  background-color: #dd9520;
+  background-color: var(--color-primary-dark);
 }
 
 .new-game {
