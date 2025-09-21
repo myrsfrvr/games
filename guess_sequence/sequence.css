@@ -77,7 +77,20 @@ body {
   font-size: 3rem;
   color: var(--color-text);
   font-weight: 700;
-  letter-spacing: 5px;
+
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.sequence-num {
+  font-family: 'Space Mono', monospace;
+  text-align: center;
+
+  display: inline-block;
+  padding: 0.1rem 1rem;
+  background-color: var(--color-primary);
+  border: solid 2px var(--color-text);
 }
 
 .right-side {

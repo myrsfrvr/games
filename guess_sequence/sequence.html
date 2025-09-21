@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
 
@@ -17,12 +17,15 @@
   </head>
   <body>
     <div class="main-content">
-      <!-- <h1 class="h1">Guess the <span>S</span>equence</h1> -->
-      <!-- <h1 class="h1">Guess the <span>Sequence</span></h1> -->
       <h1 class="h1"><span>Guess</span> the Sequence</h1>
       <div class="sides">
         <div class="left-side">
-          <p class="sequence">1234</p>
+          <div class="sequence">
+            <p class="sequence-num">?</p>
+            <p class="sequence-num">?</p>
+            <p class="sequence-num">?</p>
+            <p class="sequence-num">?</p>
+          </div>
           <p class="table">TABLE</p>
         </div>
 
@@ -30,7 +33,6 @@
           <input type="number" class="input" />
           <div class="btns">
             <button class="btn check">Check</button>
-
             <button class="btn new-game">New game</button>
           </div>
         </div>
