@@ -11,10 +11,30 @@ function displayErrorMessage() {
   messageEl.classList.remove('hidden');
 }
 
+function isValidGuess(guess) {
+  if (guess === '' || guess.length !== sequenceLength) return false;
+
+  for (const num of guess) {
+    if (num < '0' || num > '9') return false;
+  }
+
+  return true;
+}
+
+function isCorrectGuess(guess) {
+  for (let i = 0; i < sequenceLength; i++) {
+    if (guess[i] !== answer[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 for (let i = 0; i < sequenceLength; i++) {
   answer += Math.trunc(Math.random() * 10);
 }
 
+// TODO: REMOVE LATER (shows answer in the beginning of the game)
 answerEls.forEach((el, i) => {
   el.textContent = answer[i];
 });
@@ -22,8 +42,9 @@ answerEls.forEach((el, i) => {
 document.querySelector('.check').addEventListener('click', function () {
   guess = document.querySelector('.input').value;
 
-  if (guess === '' || guess.length !== 4) displayErrorMessage();
-  else messageEl.classList.add('hidden');
-
-  console.log(guess);
+  if (!isValidGuess(guess)) displayErrorMessage();
+  else {
+    messageEl.classList.add('hidden');
+    console.log(isCorrectGuess(guess));
+  }
 });
