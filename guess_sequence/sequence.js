@@ -21,35 +21,45 @@ function isValidGuess(guess) {
   return true;
 }
 
-// TODO: продумать как запоминать сколько мест и каких
-// мб сделать 2 переменные глобальные и туда записывать сколько цифр правильных, сколько нет и тд (then QUESTION: when to update that global variable so it doesn't show old number)
-
-// ИЛИ не создавать глоб перем, а создать перем внутри функции, а затем возвращать сразу несколько переменных (true/false, сколько на прав месте, сколько на неправ)
-// и им отдавать переменным с помощью spread operator
-// const [isCorrect, correctPosition, incorrectPosition] = ... isCorrectGuess(guess);
 // создать функцию под вывод результата (следующей строки таблицы) на экран
 
 // 854798
 // 7c238c
 // 7f95d1
 // QUESTION: нужно ли запоминать правильные цифры?? чтобы потом их выделить? или выделение в принципе не важно и можно потом прокрутить таблицу и все??
-// QUESTION: как проверить сколько нужных букв в загадке и отгадке
 
 function isCorrectGuess(guess) {
   let correctPosition = 0;
   let incorrectPosition = 0;
+
+  let answerArr = answer.split('');
+  let guessArr = guess.split('');
+
   for (let i = 0; i < sequenceLength; i++) {
     if (guess[i] === answer[i]) {
       correctPosition += 1;
-    } else if (answer.includes(guess[i])) {
-      incorrectPosition += 1;
+      answerArr[i] = null;
+      guessArr[i] = null;
     }
-    console.log(`correct: ${correctPosition}, incorrect: ${incorrectPosition}`);
   }
 
-  if (correctPosition === sequenceLength)
-    return [true, correctPosition, incorrectPosition];
-  else return [false, correctPosition, incorrectPosition];
+  for (let i = 0; i < sequenceLength; i++) {
+    if (guessArr[i] !== null) {
+      let index = answerArr.indexOf(guessArr[i]);
+      if (index !== -1) {
+        incorrectPosition += 1;
+        answerArr[index] = null;
+      }
+    }
+  }
+
+  console.log(`correct: ${correctPosition}, incorrect: ${incorrectPosition}`);
+
+  return [
+    correctPosition === sequenceLength,
+    correctPosition,
+    incorrectPosition,
+  ];
 }
 
 for (let i = 0; i < sequenceLength; i++) {
@@ -63,12 +73,6 @@ answerEls.forEach((el, i) => {
 
 document.querySelector('.check').addEventListener('click', function () {
   guess = document.querySelector('.input').value;
-
-  // if (!isValidGuess(guess)) displayErrorMessage();
-  // else {
-  //   messageEl.classList.add('hidden');
-  //   console.log(isCorrectGuess(guess));
-  // }
 
   if (!isValidGuess(guess)) displayErrorMessage();
   else {
