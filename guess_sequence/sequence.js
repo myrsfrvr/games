@@ -11,6 +11,12 @@ let answer = '';
 let guess;
 let step = 1;
 
+function createNewSequence() {
+  for (let i = 0; i < sequenceLength; i++) {
+    answer += Math.trunc(Math.random() * 10);
+  }
+}
+
 function displayErrorMessage() {
   messageEl.classList.remove('hidden');
 }
@@ -66,6 +72,7 @@ function isCorrectGuess(guess) {
   ];
 }
 
+// QUESTION: is it possible to add rows to the top of the table? (so user can view it without scrolling)
 function addGuessToTable(guess, correct, incorrect) {
   const row = document.createElement('tr');
   row.innerHTML = `
@@ -77,14 +84,14 @@ function addGuessToTable(guess, correct, incorrect) {
   step++;
 }
 
-for (let i = 0; i < sequenceLength; i++) {
-  answer += Math.trunc(Math.random() * 10);
+// TODO: add some kind of celebration (now it's not clearly visible that user won)
+function displayWinningMessage() {
+  answerEls.forEach((el, i) => {
+    el.textContent = answer[i];
+  });
 }
 
-// TODO: REMOVE LATER (shows answer in the beginning of the game)
-answerEls.forEach((el, i) => {
-  el.textContent = answer[i];
-});
+createNewSequence();
 
 document.querySelector('.check').addEventListener('click', function () {
   guess = inputEl.value;
@@ -98,10 +105,28 @@ document.querySelector('.check').addEventListener('click', function () {
 
     guessTableEl.classList.remove('hidden');
 
+    // QUESTION: after game ended, should i show user with colours what digits were in correct and incorrect positions?
     if (isCorrect) {
       displayWinningMessage();
+    } else {
+      // FIXME: fix the 3rd column text. '1 correct, 3 incorrect' is a bit weird. maybe do colours? red for incorrect positions, green for correct
+      addGuessToTable(guess, correctPosition, incorrectPosition);
     }
-
-    addGuessToTable(guess, correctPosition, incorrectPosition);
   }
 });
+
+// QUESTION: should i add maximum amount of guesses?
+
+// TODO: make a pop up window with game rules, opens when click on icon in 'How to play'
+
+// TODO: new game button:
+// 1. new guess
+// 2. new step
+// 3. new answer
+// 4. should hide sequence with ???? again
+// 5. remove winning message
+// 6. remove all rows from table
+// 7. hide table
+// 8. new game btn should work in every scenario: after player won, after player lost (if implemented max guesses), while player playing, before game started
+
+// QUESTION: can i clear the input after user guesses? of after 'new game' is hit
