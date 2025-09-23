@@ -4,8 +4,12 @@
 const sequenceLength = 4;
 const answerEls = document.querySelectorAll('.sequence-num');
 const messageEl = document.querySelector('.message');
+const inputEl = document.querySelector('.input');
+const guessTableEl = document.querySelector('.guess-table');
+const tbodyEl = document.querySelector('.guess-table tbody');
 let answer = '';
 let guess;
+let step = 1;
 
 function displayErrorMessage() {
   messageEl.classList.remove('hidden');
@@ -62,6 +66,17 @@ function isCorrectGuess(guess) {
   ];
 }
 
+function addGuessToTable(guess, correct, incorrect) {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${step}</td>
+    <td>${guess}</td>
+    <td>${correct} correct, ${incorrect} incorrect</td>
+  `;
+  tbodyEl.appendChild(row);
+  step++;
+}
+
 for (let i = 0; i < sequenceLength; i++) {
   answer += Math.trunc(Math.random() * 10);
 }
@@ -72,7 +87,7 @@ answerEls.forEach((el, i) => {
 });
 
 document.querySelector('.check').addEventListener('click', function () {
-  guess = document.querySelector('.input').value;
+  guess = inputEl.value;
 
   if (!isValidGuess(guess)) displayErrorMessage();
   else {
@@ -80,5 +95,13 @@ document.querySelector('.check').addEventListener('click', function () {
     const [isCorrect, correctPosition, incorrectPosition] =
       isCorrectGuess(guess);
     console.log(isCorrect, correctPosition, incorrectPosition);
+
+    guessTableEl.classList.remove('hidden');
+
+    if (isCorrect) {
+      displayWinningMessage();
+    }
+
+    addGuessToTable(guess, correctPosition, incorrectPosition);
   }
 });
