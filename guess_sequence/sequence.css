@@ -236,3 +236,120 @@ body {
 .new-game:active {
   background-color: #eee;
 }
+
+/* 
+///////////////////////
+// MEDIA QUERIES
+///////////////////////
+*/
+
+@media (max-width: 62.5em) {
+  body {
+    font-size: 1.6rem;
+  }
+
+  .main-content {
+    margin: 4rem auto;
+    padding: 6rem 1.5rem;
+  }
+
+  .h1 {
+    font-size: 6rem;
+  }
+
+  .btn {
+    padding: 0.5rem 2rem;
+  }
+}
+
+@media (max-width: 48.75em) {
+  body {
+    font-size: 1.4rem;
+  }
+
+  .h1 {
+    font-size: 5rem;
+  }
+
+  .btn {
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 41.25em) {
+  .main-content {
+    margin: 3rem auto;
+    padding: 5rem 1.5rem;
+  }
+
+  .h1 {
+    font-size: 3.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .h1 span {
+    padding: 0.5rem 2rem;
+  }
+
+  .sequence {
+    font-size: 2.2rem;
+  }
+
+  .btns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    font-size: 1.2rem;
+    padding: 0.5rem 1.2rem;
+  }
+}
+
+@media (max-width: 30em) {
+  body {
+    background: var(--color-primary-lightest);
+    height: 100%;
+    min-height: 0;
+  }
+
+  .main-content {
+    margin: 0;
+    padding: 5rem 1.5rem;
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 100vh;
+  }
+
+  .h1 {
+    font-size: 2.5rem;
+    margin-bottom: 5rem;
+  }
+
+  .sides {
+    flex-direction: column-reverse;
+    gap: 3rem;
+  }
+
+  .right-side,
+  .left-side {
+    width: 100%;
+  }
+
+  .sequence {
+    font-size: 2rem;
+  }
+
+  .input {
+    display: block;
+    width: 50%;
+    margin: 0 auto 1.5rem;
+  }
+
+  .btns {
+    flex-direction: row;
+    font-size: 1rem;
+  }
+}
