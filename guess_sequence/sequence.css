@@ -120,13 +120,15 @@ body {
 
 /* TABLE */
 
-.guess-table {
+.guess-table,
+.rules-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
 }
 
-.guess-table thead th {
+.guess-table thead th,
+.rules-table thead th {
   background-color: var(--color-primary-light);
   color: var(--color-text);
   font-weight: 600;
@@ -135,20 +137,30 @@ body {
   text-align: center;
 }
 
-.guess-table tbody td {
+.guess-table tbody td,
+.rules-table tbody td {
   color: var(--color-text);
   box-shadow: inset 0 -1px rgba(0, 0, 0, 0.1);
   text-align: center;
   padding: 1rem;
 }
 
-.guess-table tbody tr:last-child td {
+.guess-table tbody tr:last-child td,
+.rules-table tbody tr:last-child td {
   box-shadow: none;
 }
 
 .guess-table td:not(:first-child),
-.guess-table th:not(:first-child) {
+.guess-table th:not(:first-child),
+.rules-table td:not(:first-child),
+.rules-table th:not(:first-child) {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.rules-table th:nth-child(3),
+.rules-table td:nth-child(3) {
+  /* width: 55%; */
+  text-align: left;
 }
 
 /* hides the table initially, will be removed after the first guess */
@@ -181,10 +193,20 @@ body {
   font-size: 1.5rem;
 }
 
+.info-box:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #312c59;
+}
+
 .info-icon {
   width: 2rem;
   height: 2rem;
   color: var(--color-text);
+}
+
+.info-box:hover .info-icon {
+  color: #312c59;
 }
 
 .popup {
@@ -206,11 +228,15 @@ body {
   color: var(--color-text);
   padding: 2rem;
   border-radius: 1rem;
-  max-width: 40rem;
-  /* text-align: center; */
+  max-width: 50rem;
 }
 
 .h2 {
+  margin-bottom: 1rem;
+}
+
+.rules,
+.rules-table {
   margin-bottom: 1rem;
 }
 
