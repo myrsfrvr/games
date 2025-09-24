@@ -1,24 +1,34 @@
 'use strict';
 
 // VARIABLES
-const sequenceLength = 4;
+const sequenceEl = document.querySelector('.sequence');
 const answerEls = document.querySelectorAll('.sequence-num');
-const messageEl = document.querySelector('.message');
-const inputEl = document.querySelector('.input');
 const guessTableEl = document.querySelector('.guess-table');
 const tbodyEl = document.querySelector('.guess-table tbody');
+const inputEl = document.querySelector('.input');
+const stepCountEl = document.querySelector('.step-count');
+const stepCountNumEl = document.querySelector('.step-count-num');
+const messageEl = document.querySelector('.error-message');
+const checkBtn = document.querySelector('.check');
+
+const sequenceLength = 4;
 let answer = '';
 let guess;
 let step = 1;
+const maxSteps = 10;
 
 function createNewSequence() {
   for (let i = 0; i < sequenceLength; i++) {
     answer += Math.trunc(Math.random() * 10);
   }
+
+  // TODO: remove later
+  console.log(answer);
 }
 
 function displayErrorMessage() {
   messageEl.classList.remove('hidden');
+  stepCountEl.classList.add('hidden');
 }
 
 function isValidGuess(guess) {
@@ -30,13 +40,6 @@ function isValidGuess(guess) {
 
   return true;
 }
-
-// создать функцию под вывод результата (следующей строки таблицы) на экран
-
-// 854798
-// 7c238c
-// 7f95d1
-// QUESTION: нужно ли запоминать правильные цифры?? чтобы потом их выделить? или выделение в принципе не важно и можно потом прокрутить таблицу и все??
 
 function isCorrectGuess(guess) {
   let correctPosition = 0;
@@ -63,8 +66,6 @@ function isCorrectGuess(guess) {
     }
   }
 
-  console.log(`correct: ${correctPosition}, incorrect: ${incorrectPosition}`);
-
   return [
     correctPosition === sequenceLength,
     correctPosition,
@@ -81,41 +82,76 @@ function addGuessToTable(guess, correct, incorrect) {
     <td>${correct} correct, ${incorrect} incorrect</td>
   `;
   tbodyEl.appendChild(row);
+  stepCountNumEl.textContent = maxSteps - step;
   step++;
 }
 
-// TODO: add some kind of celebration (now it's not clearly visible that user won)
 function displayWinningMessage() {
+  document.querySelector('.win-message').classList.remove('hidden');
+
+  answerEls.forEach(el => el.classList.add('win'));
+  launchConfetti();
+}
+
+function displayLosingMessage() {
+  document.querySelector('.lose-message').classList.remove('hidden');
+}
+
+function endGame() {
+  checkBtn.disabled = true;
+  stepCountEl.classList.add('hidden');
+
   answerEls.forEach((el, i) => {
     el.textContent = answer[i];
   });
 }
 
+function launchConfetti() {
+  const rect = sequenceEl.getBoundingClientRect();
+  const x = (rect.left + rect.width / 2) / window.innerWidth;
+  const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { x, y },
+  });
+}
+
 createNewSequence();
 
-document.querySelector('.check').addEventListener('click', function () {
+checkBtn.addEventListener('click', function () {
   guess = inputEl.value;
 
   if (!isValidGuess(guess)) displayErrorMessage();
   else {
     messageEl.classList.add('hidden');
+    stepCountEl.classList.remove('hidden');
+
     const [isCorrect, correctPosition, incorrectPosition] =
       isCorrectGuess(guess);
-    console.log(isCorrect, correctPosition, incorrectPosition);
 
     guessTableEl.classList.remove('hidden');
 
     // QUESTION: after game ended, should i show user with colours what digits were in correct and incorrect positions?
     if (isCorrect) {
+      endGame();
       displayWinningMessage();
     } else {
       // FIXME: fix the 3rd column text. '1 correct, 3 incorrect' is a bit weird. maybe do colours? red for incorrect positions, green for correct
       addGuessToTable(guess, correctPosition, incorrectPosition);
+      stepCountEl.classList.remove('hidden');
+    }
+
+    if (step > 10) {
+      endGame();
+      displayLosingMessage();
     }
   }
-});
 
-// QUESTION: should i add maximum amount of guesses?
+  // TODO: add later, now it's annoying
+  // inputEl.value = '';
+});
 
 // TODO: make a pop up window with game rules, opens when click on icon in 'How to play'
 

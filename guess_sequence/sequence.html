@@ -27,6 +27,9 @@
             <p class="sequence-num">?</p>
           </div>
 
+          <p class="win-message hidden">Congratulations! 🎉 You won!</p>
+          <p class="lose-message hidden">Oh no... You lost 😭</p>
+
           <table class="guess-table hidden">
             <thead>
               <tr>
@@ -61,7 +64,10 @@
             </svg>
           </div>
           <input type="number" class="input" />
-          <p class="message hidden">Invalid guess</p>
+          <p class="error-message hidden">Invalid guess</p>
+          <p class="step-count hidden">
+            <span class="step-count-num"></span> steps left
+          </p>
           <div class="btns">
             <button class="btn check">Check</button>
             <button class="btn new-game">New game</button>
@@ -69,6 +75,8 @@
         </div>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script src="./sequence.js"></script>
   </body>
