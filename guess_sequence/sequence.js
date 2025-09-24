@@ -10,6 +10,10 @@ const stepCountEl = document.querySelector('.step-count');
 const stepCountNumEl = document.querySelector('.step-count-num');
 const messageEl = document.querySelector('.error-message');
 const checkBtn = document.querySelector('.check');
+const popupWrapperEl = document.querySelector('.popup-wrapper');
+const popupEl = document.querySelector('.popup');
+const openInfoBtn = document.querySelector('.info-box');
+const closeInfoBtn = document.querySelector('.close-popup');
 
 const sequenceLength = 4;
 let answer = '';
@@ -73,7 +77,6 @@ function isCorrectGuess(guess) {
   ];
 }
 
-// QUESTION: is it possible to add rows to the top of the table? (so user can view it without scrolling)
 function addGuessToTable(guess, correct, incorrect) {
   const row = document.createElement('tr');
   row.innerHTML = `
@@ -81,7 +84,8 @@ function addGuessToTable(guess, correct, incorrect) {
     <td>${guess}</td>
     <td>${correct} correct, ${incorrect} incorrect</td>
   `;
-  tbodyEl.appendChild(row);
+  tbodyEl.insertBefore(row, tbodyEl.firstChild);
+
   stepCountNumEl.textContent = maxSteps - step;
   step++;
 }
@@ -153,6 +157,18 @@ checkBtn.addEventListener('click', function () {
   // inputEl.value = '';
 });
 
+openInfoBtn.addEventListener('click', function () {
+  popupWrapperEl.classList.remove('hidden');
+});
+
+closeInfoBtn.addEventListener('click', function () {
+  popupWrapperEl.classList.add('hidden');
+});
+
+popupWrapperEl.addEventListener('click', function (e) {
+  if (e.target === popupEl) popupWrapperEl.classList.add('hidden');
+});
+
 // TODO: make a pop up window with game rules, opens when click on icon in 'How to play'
 
 // TODO: new game button:
@@ -164,5 +180,3 @@ checkBtn.addEventListener('click', function () {
 // 6. remove all rows from table
 // 7. hide table
 // 8. new game btn should work in every scenario: after player won, after player lost (if implemented max guesses), while player playing, before game started
-
-// QUESTION: can i clear the input after user guesses? of after 'new game' is hit
