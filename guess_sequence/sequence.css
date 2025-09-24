@@ -229,6 +229,8 @@ body {
   padding: 2rem;
   border-radius: 1rem;
   max-width: 50rem;
+
+  position: relative;
 }
 
 .h2 {
@@ -238,6 +240,26 @@ body {
 .rules,
 .rules-table {
   margin-bottom: 1rem;
+}
+
+.close-popup {
+  background-color: transparent;
+  border: none;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem 1rem 0 0;
+}
+
+.close-popup:hover {
+  color: crimson;
+}
+
+.close-icon {
+  width: 3rem;
+  height: 3rem;
+  /* color: var(--color-text); */
 }
 
 .input {
@@ -453,7 +475,7 @@ body {
     background-color: var(--color-primary);
   }
   50% {
-    background-color: #79f101;
+    background-color: #68cf02;
   }
   100% {
     background-color: var(--color-primary);
