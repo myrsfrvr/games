@@ -98,3 +98,53 @@ body {
   box-shadow: 2rem 2rem 5rem rgba(0, 0, 0, 0.1);
   transform: scale(1);
 }
+
+/* 
+/////////////////////////
+// MEDIA QUERIES
+/////////////////////////
+*/
+
+@media (max-width: 50em) {
+  .container {
+    max-width: 55rem;
+  }
+
+  .cards {
+    gap: 1.5rem;
+  }
+
+  .card:link,
+  .card:visited {
+    height: 8rem;
+  }
+
+  .h1 {
+    font-size: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  .guess-sequence {
+    font-size: 1.8rem;
+  }
+
+  .tba {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 35em) {
+  .container {
+    margin: 4rem 3rem;
+  }
+
+  .h1 {
+    font-size: 3.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
