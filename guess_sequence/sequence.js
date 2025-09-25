@@ -10,6 +10,7 @@ const stepCountEl = document.querySelector('.step-count');
 const stepCountNumEl = document.querySelector('.step-count-num');
 const messageEl = document.querySelector('.error-message');
 const checkBtn = document.querySelector('.check');
+const newGameBtn = document.querySelector('.new-game');
 const popupWrapperEl = document.querySelector('.popup-wrapper');
 const popupEl = document.querySelector('.popup');
 const openInfoBtn = document.querySelector('.info-box');
@@ -21,7 +22,12 @@ let guess;
 let step = 1;
 const maxSteps = 10;
 
+/////////////////////////////////
+// FUNCTIONS
+/////////////////////////////////
+
 function createNewSequence() {
+  // Creates a random number from 0 to 9 four times and then just adds them together in a string
   for (let i = 0; i < sequenceLength; i++) {
     answer += Math.trunc(Math.random() * 10);
   }
@@ -36,6 +42,7 @@ function displayErrorMessage() {
 }
 
 function isValidGuess(guess) {
+  // Browser automatically checks if it's a number (no spaces or letters allowed) so code only checks if that number is not negative or an integer
   if (guess === '' || guess.length !== sequenceLength) return false;
 
   for (const num of guess) {
@@ -52,6 +59,7 @@ function isCorrectGuess(guess) {
   let answerArr = answer.split('');
   let guessArr = guess.split('');
 
+  // First, checks all correct positions. If there are any, marks that position as 'null'
   for (let i = 0; i < sequenceLength; i++) {
     if (guess[i] === answer[i]) {
       correctPosition += 1;
@@ -60,6 +68,7 @@ function isCorrectGuess(guess) {
     }
   }
 
+  // Second, checks all right numbers in incorrect positions, ignoring all the marked 'null' positions from previous step. Also marks already found numbers 'null' to avoid counting them twice
   for (let i = 0; i < sequenceLength; i++) {
     if (guessArr[i] !== null) {
       let index = answerArr.indexOf(guessArr[i]);
@@ -77,6 +86,7 @@ function isCorrectGuess(guess) {
   ];
 }
 
+// Adds all guesses with results to the table in reverse order (last guess on top)
 function addGuessToTable(guess, correct, incorrect) {
   const row = document.createElement('tr');
   row.innerHTML = `
@@ -101,6 +111,7 @@ function displayLosingMessage() {
   document.querySelector('.lose-message').classList.remove('hidden');
 }
 
+// Ensures the state of the endgame: disables Check button, shows correct sequence
 function endGame() {
   checkBtn.disabled = true;
   stepCountEl.classList.add('hidden');
@@ -121,6 +132,10 @@ function launchConfetti() {
     origin: { x, y },
   });
 }
+
+/////////////////////////////////
+// GAME LOGIC
+/////////////////////////////////
 
 createNewSequence();
 
@@ -169,8 +184,6 @@ popupWrapperEl.addEventListener('click', function (e) {
   if (e.target === popupEl) popupWrapperEl.classList.add('hidden');
 });
 
-// TODO: make a pop up window with game rules, opens when click on icon in 'How to play'
-
 // TODO: new game button:
 // 1. new guess
 // 2. new step
@@ -180,3 +193,7 @@ popupWrapperEl.addEventListener('click', function (e) {
 // 6. remove all rows from table
 // 7. hide table
 // 8. new game btn should work in every scenario: after player won, after player lost (if implemented max guesses), while player playing, before game started
+
+newGameBtn.addEventListener('click', function () {
+  console.log('fdf');
+});

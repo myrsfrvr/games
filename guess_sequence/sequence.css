@@ -184,29 +184,31 @@ body {
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.8rem;
+
+  color: var(--color-text);
 }
 
 .info {
   display: inline-block;
   margin-right: 0;
-
   font-size: 1.5rem;
+  border-bottom: 2px solid transparent;
+
+  transition: border-color 0.5s ease;
 }
 
 .info-box:hover {
   cursor: pointer;
-  text-decoration: underline;
   color: #312c59;
 }
 
 .info-icon {
   width: 2rem;
   height: 2rem;
-  color: var(--color-text);
 }
 
-.info-box:hover .info-icon {
-  color: #312c59;
+.info-box:hover .info {
+  border-color: #312c59;
 }
 
 .popup {
