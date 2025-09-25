@@ -27,13 +27,11 @@ const maxSteps = 10;
 /////////////////////////////////
 
 function createNewSequence() {
+  answer = '';
   // Creates a random number from 0 to 9 four times and then just adds them together in a string
   for (let i = 0; i < sequenceLength; i++) {
     answer += Math.trunc(Math.random() * 10);
   }
-
-  // TODO: remove later
-  console.log(answer);
 }
 
 function displayErrorMessage() {
@@ -138,7 +136,6 @@ function launchConfetti() {
 
 // Initial state of the game
 function init() {
-  answer = '';
   createNewSequence();
   guess = '';
   step = 1;
@@ -182,7 +179,7 @@ checkBtn.addEventListener('click', function () {
       stepCountEl.classList.remove('hidden');
     }
 
-    if (step > 10) {
+    if (step > maxSteps) {
       endGame();
       displayLosingMessage();
     }
