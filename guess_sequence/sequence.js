@@ -133,6 +133,24 @@ function launchConfetti() {
   });
 }
 
+// Initial state of the game
+function init() {
+  answer = '';
+  createNewSequence();
+  guess = '';
+  step = 1;
+  tbodyEl.innerHTML = '';
+
+  answerEls.forEach(el => {
+    el.textContent = '?';
+  });
+  checkBtn.disabled = false;
+  document.querySelector('.win-message').classList.add('hidden');
+  document.querySelector('.lose-message').classList.add('hidden');
+  guessTableEl.classList.add('hidden');
+  stepCountEl.classList.add('hidden');
+}
+
 /////////////////////////////////
 // GAME LOGIC
 /////////////////////////////////
@@ -184,16 +202,6 @@ popupWrapperEl.addEventListener('click', function (e) {
   if (e.target === popupEl) popupWrapperEl.classList.add('hidden');
 });
 
-// TODO: new game button:
-// 1. new guess
-// 2. new step
-// 3. new answer
-// 4. should hide sequence with ???? again
-// 5. remove winning message
-// 6. remove all rows from table
-// 7. hide table
-// 8. new game btn should work in every scenario: after player won, after player lost (if implemented max guesses), while player playing, before game started
-
 newGameBtn.addEventListener('click', function () {
-  console.log('fdf');
+  init();
 });
