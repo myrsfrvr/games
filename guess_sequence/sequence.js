@@ -92,7 +92,10 @@ function addGuessToTable(guess, correct, incorrect) {
   row.innerHTML = `
     <td>${step}</td>
     <td>${guess}</td>
-    <td>${correct} correct, ${incorrect} incorrect</td>
+    <td>
+      <span class="badge correct">${correct}</span>
+      <span class="badge incorrect">${incorrect}</span>
+    </td>
   `;
   tbodyEl.insertBefore(row, tbodyEl.firstChild);
 
@@ -149,6 +152,7 @@ function init() {
   document.querySelector('.lose-message').classList.add('hidden');
   guessTableEl.classList.add('hidden');
   stepCountEl.classList.add('hidden');
+  messageEl.classList.add('hidden');
 }
 
 /////////////////////////////////
@@ -170,12 +174,10 @@ checkBtn.addEventListener('click', function () {
 
     guessTableEl.classList.remove('hidden');
 
-    // QUESTION: after game ended, should i show user with colours what digits were in correct and incorrect positions?
     if (isCorrect) {
       endGame();
       displayWinningMessage();
     } else {
-      // FIXME: fix the 3rd column text. '1 correct, 3 incorrect' is a bit weird. maybe do colours? red for incorrect positions, green for correct
       addGuessToTable(guess, correctPosition, incorrectPosition);
       stepCountEl.classList.remove('hidden');
     }
@@ -186,8 +188,7 @@ checkBtn.addEventListener('click', function () {
     }
   }
 
-  // TODO: add later, now it's annoying
-  // inputEl.value = '';
+  inputEl.value = '';
 });
 
 openInfoBtn.addEventListener('click', function () {

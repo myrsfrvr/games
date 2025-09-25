@@ -35,7 +35,7 @@
               <tr>
                 <th>Step</th>
                 <th>Guess</th>
-                <th>Result</th>
+                <th>Hint</th>
               </tr>
             </thead>
             <tbody>
@@ -88,23 +88,29 @@
             <thead>
               <tr>
                 <th>Guess</th>
-                <th>Result</th>
+                <th>Hint</th>
                 <th>Meaning</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>1234</td>
-                <td>2 correct, 1 incorrect</td>
+                <td class="hints">
+                  <span class="badge correct">2</span>
+                  <span class="badge incorrect">1</span>
+                </td>
                 <td>
-                  2 digits are in the correct position (green highlight),<br />
-                  1 digit is in the sequence but in the wrong position (red
-                  highlight)
+                  2 digits are in the correct position,<br />
+                  1 digit is in the sequence but in the wrong position
                 </td>
               </tr>
               <tr>
                 <td>5678</td>
-                <td>0 correct, 2 incorrect</td>
+                <!-- <td>0 correct, 2 incorrect</td> -->
+                <td>
+                  <span class="badge correct">0</span>
+                  <span class="badge incorrect">2</span>
+                </td>
                 <td>
                   No digits are in the correct position,<br />
                   2 digits are in the sequence but in the wrong position

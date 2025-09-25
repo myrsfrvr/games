@@ -159,11 +159,36 @@ body {
 
 .rules-table th:nth-child(3),
 .rules-table td:nth-child(3) {
-  /* width: 55%; */
   text-align: left;
 }
 
-/* hides the table initially, will be removed after the first guess */
+.rules-table .hints {
+  white-space: nowrap;
+}
+
+.badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0 0.2rem;
+  border-radius: 50%;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.badge.correct {
+  border: solid 2px #45b948;
+}
+
+.badge.incorrect {
+  border: solid 2px #f44336;
+}
+
+/* It is added to every element that must stay hidden for some time */
 .hidden {
   display: none;
 }
@@ -392,6 +417,11 @@ body {
   .btn {
     font-size: 1.1rem;
     padding: 0.5rem 1rem;
+  }
+
+  .badge {
+    font-size: 1.4rem;
+    margin: 0 0.1rem;
   }
 }
 
