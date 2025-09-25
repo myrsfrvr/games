@@ -1,3 +1,100 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
 body {
-  background-color: brown;
+  font-size: 1.6rem;
+  background-color: #daeffb;
+  color: #1e1e1e;
+  font-weight: 500;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.container {
+  margin: 5rem auto;
+  max-width: 75rem;
+}
+
+.h1 {
+  font-size: 5rem;
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+.card:link,
+.card:visited {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  height: 10rem;
+  text-align: center;
+  text-decoration: none;
+
+  border-radius: 2rem;
+  box-shadow: 2rem 2rem 5rem rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+
+  transition: all 0.5s;
+}
+
+.card:hover,
+.card:active {
+  box-shadow: 2rem 2rem 7rem rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.guess-sequence {
+  font-size: 2.5rem;
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 600;
+  color: #1a1446;
+}
+
+.guess-sequence:hover {
+  background-color: #fff6e0;
+}
+
+.guess-sequence span {
+  display: inline-block;
+  padding: 0.5rem 3rem;
+  background-color: #f5a623;
+  color: #1a1446;
+  border: solid 2px #1a1446;
+  border-radius: 10rem;
+  box-shadow: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
+}
+
+.tba {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    rgba(107, 17, 203, 0.7),
+    rgb(37, 117, 252, 0.7)
+  );
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  cursor: auto;
+  /* transition: transform 0.3s, box-shadow 0.3s; */
+}
+
+.tba:hover,
+.tba:active {
+  box-shadow: 2rem 2rem 5rem rgba(0, 0, 0, 0.1);
+  transform: scale(1);
 }
