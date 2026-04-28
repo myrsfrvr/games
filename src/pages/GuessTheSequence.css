@@ -215,7 +215,7 @@
   color: var(--color-text);
 }
 
-.info {
+.guess-subtitle {
   display: inline-block;
   margin-right: 0;
   font-size: 1.5rem;
@@ -225,16 +225,16 @@
 }
 
 .info-box:hover {
-  cursor: pointer;
   color: #312c59;
+  cursor: pointer;
 }
 
 .info-icon {
-  width: 2rem;
-  height: 2rem;
+  width: 2.3rem;
+  height: 2.3rem;
 }
 
-.info-box:hover .info {
+.info-box:hover .guess-subtitle {
   border-color: #312c59;
 }
 
@@ -275,6 +275,7 @@
 .close-popup {
   background-color: transparent;
   border: none;
+  cursor: pointer;
 
   position: absolute;
   top: 0;
