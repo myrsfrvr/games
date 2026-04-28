@@ -1,0 +1,27 @@
+:root {
+  --font-home-page: 'Space Grotesk', sans-serif;
+  --font-guess-sequence-page: 'League Spartan', sans-serif;
+  --font-guess-sequence-seq: 'Space Mono', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.font-home {
+  font-family: var(--font-home-page);
+}
+
+.font-guess-sequence {
+  font-family: var(--font-guess-sequence-page);
+}
+
+.font-guess-sequence-seq {
+  font-family: var(--font-guess-sequence-seq);
+}

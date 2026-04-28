@@ -1,40 +1,30 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 62.5%;
-}
-
-body {
-  font-size: 1.6rem;
+.home-page {
+  min-height: 100vh;
   background-color: #daeffb;
   color: #1e1e1e;
   font-weight: 500;
-  font-family: 'Space Grotesk', sans-serif;
+  padding: 5rem 3rem;
 }
 
-.container {
-  margin: 5rem auto;
+.home-container {
+  margin: 0 auto;
   max-width: 75rem;
 }
 
-.h1 {
+.home-title {
   font-size: 5rem;
   text-align: center;
   margin-bottom: 5rem;
 }
 
-.cards {
+.home-cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2.5rem;
 }
 
-.card:link,
-.card:visited {
+.home-card:link,
+.home-card:visited {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,15 +41,14 @@ body {
   transition: all 0.5s;
 }
 
-.card:hover,
-.card:active {
+.home-card:hover,
+.home-card:active {
   box-shadow: 2rem 2rem 7rem rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
 }
 
 .guess-sequence {
   font-size: 2.5rem;
-  font-family: 'League Spartan', sans-serif;
   font-weight: 600;
   color: #1a1446;
 }
@@ -90,7 +79,6 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   cursor: auto;
-  /* transition: transform 0.3s, box-shadow 0.3s; */
 }
 
 .tba:hover,
@@ -99,51 +87,42 @@ body {
   transform: scale(1);
 }
 
-/* 
-/////////////////////////
-// MEDIA QUERIES
-/////////////////////////
-*/
-
 @media (max-width: 50em) {
-  .container {
+  .home-container {
     max-width: 55rem;
   }
 
-  .cards {
+  .home-cards {
     gap: 1.5rem;
   }
 
-  .card:link,
-  .card:visited {
+  .home-card:link,
+  .home-card:visited {
     height: 8rem;
   }
 
-  .h1 {
+  .home-title {
     font-size: 4rem;
     margin-bottom: 4rem;
   }
 
-  .guess-sequence {
-    font-size: 1.8rem;
-  }
-
+  .guess-sequence,
   .tba {
     font-size: 1.8rem;
   }
 }
 
 @media (max-width: 35em) {
-  .container {
-    margin: 4rem 3rem;
+  .home-page {
+    padding: 4rem 3rem;
   }
 
-  .h1 {
+  .home-title {
     font-size: 3.5rem;
     margin-bottom: 3rem;
   }
 
-  .cards {
+  .home-cards {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
