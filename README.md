@@ -1,16 +1,45 @@
-# React + Vite
+# 🎮 Web Games Collection
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is my personal project: a website where I build and collect small web games.  
+It’s both a playground for practicing web development and a portfolio project to showcase my skills.  
+The home page lists all available games.
 
-Currently, two official plugins are available:
+Project was rewritten using React in April 2026. The old vanilla JS version is tagged.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Demo
 
-## React Compiler
+The project is deployed on Netlify and can be accessed [here](https://games-ppopova.netlify.app).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## All Games
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🔢 Guess the Sequence
+
+A logic game where the goal is to crack a hidden 4-digit code.
+
+- Dynamic DOM manipulation (adding/removing rows in the guess table, badges for feedback).
+- User interaction (popups, hover effects, reset button).
+- Responsive web design (Flexbox, Media queries, using rem units, CSS variables).
+- Clean code organization (HTML, CSS, JS separated and readable with comments).
+- Attention to UX (badges instead of plain text, smooth transitions).
+- Integrated external library for celebratory effects (canvas-confetti).
+
+#### Screenshot
+
+![Guess the Sequence screenshot](screenshots/guess-sequence.png)
+
+---
+
+## 🛠️ Built With
+
+- HTML
+- CSS
+- JavaScript
+
+---
+
+## 🚀 Future Plans
+
+- Add more games to the collection.
+- Improve the UI with animations and polish.
