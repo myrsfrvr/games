@@ -6,6 +6,13 @@ function GuessTheSequence() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [guess, setGuess] = useState('');
   const [showError, setShowError] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const sequenceLength = 4;
+
+  const [answer, setAnswer] = useState(() =>
+    generateRandomSequence(sequenceLength),
+  );
 
   function handleOpenPopup() {
     setIsPopupOpen(true);
@@ -33,6 +40,12 @@ function GuessTheSequence() {
     setShowError(false);
   }
 
+  function handleNewGame() {
+    setAnswer(generateRandomSequence(sequenceLength));
+    setGuess('');
+    setShowError(false);
+  }
+
   // useEffect(() => {
   //   if (hasWon) {
   //     confetti({
@@ -44,17 +57,22 @@ function GuessTheSequence() {
   // }, [hasWon]);
 
   return (
-    <section className="guess-page font-guess-sequence">
+    <section className="guess-page">
       <div className="main-content">
-        <h1 className="guess-title">
+        <h1 className="guess-title font-guess-sequence">
           <span>Guess</span> the Sequence
         </h1>
         <div className="sides">
           <div className="left-side">
             <div className="sequence">
-              {new Array(4).fill(null).map((_, i) => (
-                <p className="sequence-num" key={i}>
+              {/* {new Array(4).fill(null).map((_, i) => (
+                <p className="sequence-num font-guess-sequence-seq" key={i}>
                   ?
+                </p>
+              ))} */}
+              {answer.split('').map((digit, i) => (
+                <p className="sequence-num font-guess-sequence-seq" key={i}>
+                  {digit}
                 </p>
               ))}
             </div>
@@ -100,7 +118,7 @@ function GuessTheSequence() {
               type="text"
               className="input"
               value={guess}
-              onChange={e => handleGuessChange(e)}
+              onChange={handleGuessChange}
               onKeyDown={e => {
                 if (e.key === 'Enter') handleGuessCheck();
               }}
@@ -116,7 +134,9 @@ function GuessTheSequence() {
               <button className="btn check" onClick={handleGuessCheck}>
                 Check
               </button>
-              <button className="btn new-game">New game</button>
+              <button className="btn new-game" onClick={handleNewGame}>
+                New game
+              </button>
             </div>
           </div>
         </div>
@@ -126,6 +146,16 @@ function GuessTheSequence() {
 }
 
 export default GuessTheSequence;
+
+function generateRandomSequence(length = 4) {
+  let digits = [];
+
+  for (let i = 0; i < length; i++) {
+    digits.push(Math.trunc(Math.random() * 10));
+  }
+
+  return digits.join('');
+}
 
 function HowToPlayPopup({ onClosePopup }) {
   return (
