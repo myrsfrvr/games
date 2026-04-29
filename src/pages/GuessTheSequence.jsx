@@ -7,6 +7,7 @@ function GuessTheSequence() {
   const [guess, setGuess] = useState('');
   const [showError, setShowError] = useState(false);
   const [message, setMessage] = useState('');
+  const [steps, setSteps] = useState(10);
 
   const sequenceLength = 4;
 
@@ -38,12 +39,28 @@ function GuessTheSequence() {
     }
 
     setShowError(false);
+
+    const [correctPositions, incorrectPositions] = isGuessCorrect(
+      guess,
+      answer,
+      sequenceLength,
+    );
+
+    if (correctPositions === 4) {
+      setMessage('success');
+      return;
+    } else {
+      addGuessToTable(guess, correctPositions, incorrectPositions);
+      setSteps(prev => (prev === 1 ? setMessage('fail') : prev - 1));
+    }
   }
 
   function handleNewGame() {
     setAnswer(generateRandomSequence(sequenceLength));
     setGuess('');
     setShowError(false);
+    setMessage('');
+    setSteps(10);
   }
 
   // useEffect(() => {
@@ -77,8 +94,7 @@ function GuessTheSequence() {
               ))}
             </div>
 
-            <p className="win-message hidden">Congratulations! 🎉 You won!</p>
-            <p className="lose-message hidden">Oh no... You lost 😭</p>
+            {message && <ResultMessage message={message} />}
 
             <table className="guess-table hidden">
               <thead>
@@ -126,11 +142,8 @@ function GuessTheSequence() {
               maxLength={4}
               placeholder="1234"
             />
-            {showError && <p className="error-message">Invalid guess</p>}
-            <p className="step-count hidden">
-              <span className="step-count-num"></span> steps left
-            </p>
-            <div className="btns">
+
+            <div className="guess-btns">
               <button className="btn check" onClick={handleGuessCheck}>
                 Check
               </button>
@@ -138,6 +151,14 @@ function GuessTheSequence() {
                 New game
               </button>
             </div>
+
+            {showError && <p className="error-message">Invalid guess</p>}
+
+            {steps > 0 && steps < 10 && message !== 'success' && (
+              <p className="step-count">
+                <span className="step-count-num">{steps}</span> steps left
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -146,6 +167,46 @@ function GuessTheSequence() {
 }
 
 export default GuessTheSequence;
+
+function isGuessCorrect(guess, answer, sequenceLength = 4) {
+  // if (guess === answer) {
+  //   setMessage('success');
+  //   return;
+  // }
+
+  let guessArr = guess.split('');
+  let answerArr = answer.split('');
+
+  let correctPositions = 0;
+  let incorrectPositions = 0;
+
+  // checking corrrect positions, marking correct digits as null (to avoid checking them again)
+  for (let i = 0; i < sequenceLength; i++) {
+    if (guessArr[i] === answerArr[i]) {
+      correctPositions++;
+      guessArr[i] = null;
+      answerArr[i] = null;
+    }
+  }
+
+  // checking incorrect positions, marking right digits at incorrect positions as null
+  for (let i = 0; i < sequenceLength; i++) {
+    if (guessArr[i] !== null) {
+      let index = answerArr.indexOf(guessArr[i]);
+
+      if (index !== -1) {
+        incorrectPositions++;
+        answerArr[index] = null;
+      }
+    }
+  }
+
+  return [correctPositions, incorrectPositions];
+}
+
+function addGuessToTable(guess, correctPositions, incorrectPositions) {
+  console.log(guess);
+}
 
 function generateRandomSequence(length = 4) {
   let digits = [];
@@ -226,5 +287,15 @@ function HowToPlayPopup({ onClosePopup }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function ResultMessage({ message }) {
+  return (
+    <p className="guess-message">
+      {message === 'success'
+        ? 'Congratulations! 🎉 You won!'
+        : 'Oh no... You lost 😭'}
+    </p>
   );
 }
