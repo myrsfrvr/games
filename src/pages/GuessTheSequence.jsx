@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './GuessTheSequence.css';
-// import confetti from 'canvas-confetti';
+import confetti from 'canvas-confetti';
 
 function GuessTheSequence() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -53,6 +53,10 @@ function GuessTheSequence() {
       };
 
       setGuessHistory([...guessHistory, newEntry]);
+
+      if (guessHistory.length === 9) {
+        setMessage('fail');
+      }
     }
   }
 
@@ -64,15 +68,15 @@ function GuessTheSequence() {
     setGuessHistory([]);
   }
 
-  // useEffect(() => {
-  //   if (hasWon) {
-  //     confetti({
-  //       particleCount: 120,
-  //       spread: 70,
-  //       origin: { y: 0.6 },
-  //     });
-  //   }
-  // }, [hasWon]);
+  useEffect(() => {
+    if (message === 'success') {
+      confetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.6, x: 0.3 },
+      });
+    }
+  }, [message]);
 
   return (
     <section className="guess-page">
@@ -83,16 +87,22 @@ function GuessTheSequence() {
         <div className="sides">
           <div className="left-side">
             <div className="sequence">
-              {/* {new Array(4).fill(null).map((_, i) => (
-                <p className="sequence-num font-guess-sequence-seq" key={i}>
-                  ?
-                </p>
-              ))} */}
-              {answer.split('').map((digit, i) => (
+              {message
+                ? answer.split('').map((digit, i) => (
+                    <p className="sequence-num font-guess-sequence-seq" key={i}>
+                      {digit}
+                    </p>
+                  ))
+                : new Array(4).fill(null).map((_, i) => (
+                    <p className="sequence-num font-guess-sequence-seq" key={i}>
+                      ?
+                    </p>
+                  ))}
+              {/* {answer.split('').map((digit, i) => (
                 <p className="sequence-num font-guess-sequence-seq" key={i}>
                   {digit}
                 </p>
-              ))}
+              ))} */}
             </div>
 
             {message && <ResultMessage message={message} />}
@@ -138,7 +148,11 @@ function GuessTheSequence() {
             />
 
             <div className="guess-btns">
-              <button className="btn check" onClick={handleGuessCheck}>
+              <button
+                className="btn check"
+                onClick={handleGuessCheck}
+                disabled={message}
+              >
                 Check
               </button>
               <button className="btn new-game" onClick={handleNewGame}>
@@ -204,7 +218,7 @@ function generateRandomSequence(length = 4) {
   for (let i = 0; i < length; i++) {
     digits.push(Math.trunc(Math.random() * 10));
   }
-
+  console.log(digits);
   return digits.join('');
 }
 
@@ -315,8 +329,10 @@ function GuessTableRow({ curGuess }) {
       <td>{curGuess.step}</td>
       <td>{curGuess.guess}</td>
       <td>
-        <span class="badge correct">{curGuess.hint.correctPositions}</span>
-        <span class="badge incorrect">{curGuess.hint.incorrectPositions}</span>
+        <span className="badge correct">{curGuess.hint.correctPositions}</span>
+        <span className="badge incorrect">
+          {curGuess.hint.incorrectPositions}
+        </span>
       </td>
     </tr>
   );
