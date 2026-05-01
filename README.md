@@ -1,6 +1,6 @@
 # 🎮 Web Games Collection | Kolekce webových her
 
-:cz: [Česky](#cesky) | :gb: [English](#english)
+🇨🇿 [Česky](#cesky) | 🇬🇧 [English](#english)
 
 ## Česky
 
