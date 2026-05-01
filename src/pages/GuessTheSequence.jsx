@@ -7,7 +7,7 @@ function GuessTheSequence() {
   const [guess, setGuess] = useState('');
   const [showError, setShowError] = useState(false);
   const [message, setMessage] = useState('');
-  const [steps, setSteps] = useState(10);
+  const [guessHistory, setGuessHistory] = useState([]);
 
   const sequenceLength = 4;
 
@@ -40,18 +40,19 @@ function GuessTheSequence() {
 
     setShowError(false);
 
-    const [correctPositions, incorrectPositions] = isGuessCorrect(
-      guess,
-      answer,
-      sequenceLength,
-    );
+    const hint = isGuessCorrect(guess, answer, sequenceLength);
 
-    if (correctPositions === 4) {
+    if (hint.correctPositions === 4) {
       setMessage('success');
       return;
     } else {
-      addGuessToTable(guess, correctPositions, incorrectPositions);
-      setSteps(prev => (prev === 1 ? setMessage('fail') : prev - 1));
+      const newEntry = {
+        step: guessHistory.length + 1,
+        guess,
+        hint: hint,
+      };
+
+      setGuessHistory([...guessHistory, newEntry]);
     }
   }
 
@@ -60,7 +61,7 @@ function GuessTheSequence() {
     setGuess('');
     setShowError(false);
     setMessage('');
-    setSteps(10);
+    setGuessHistory([]);
   }
 
   // useEffect(() => {
@@ -96,16 +97,9 @@ function GuessTheSequence() {
 
             {message && <ResultMessage message={message} />}
 
-            <table className="guess-table hidden">
-              <thead>
-                <tr>
-                  <th>Step</th>
-                  <th>Guess</th>
-                  <th>Hint</th>
-                </tr>
-              </thead>
-              <tbody>{/* New guesses here */}</tbody>
-            </table>
+            {guessHistory.length > 0 && (
+              <GuessTable guessHistory={guessHistory} />
+            )}
           </div>
 
           <div className="right-side">
@@ -154,11 +148,16 @@ function GuessTheSequence() {
 
             {showError && <p className="error-message">Invalid guess</p>}
 
-            {steps > 0 && steps < 10 && message !== 'success' && (
-              <p className="step-count">
-                <span className="step-count-num">{steps}</span> steps left
-              </p>
-            )}
+            {guessHistory.length > 0 &&
+              guessHistory.length < 10 &&
+              message !== 'success' && (
+                <p className="step-count">
+                  <span className="step-count-num">
+                    {10 - guessHistory.length}
+                  </span>{' '}
+                  {guessHistory.length === 9 ? 'step' : 'steps'} left
+                </p>
+              )}
           </div>
         </div>
       </div>
@@ -169,11 +168,6 @@ function GuessTheSequence() {
 export default GuessTheSequence;
 
 function isGuessCorrect(guess, answer, sequenceLength = 4) {
-  // if (guess === answer) {
-  //   setMessage('success');
-  //   return;
-  // }
-
   let guessArr = guess.split('');
   let answerArr = answer.split('');
 
@@ -201,11 +195,7 @@ function isGuessCorrect(guess, answer, sequenceLength = 4) {
     }
   }
 
-  return [correctPositions, incorrectPositions];
-}
-
-function addGuessToTable(guess, correctPositions, incorrectPositions) {
-  console.log(guess);
+  return { correctPositions, incorrectPositions };
 }
 
 function generateRandomSequence(length = 4) {
@@ -297,5 +287,37 @@ function ResultMessage({ message }) {
         ? 'Congratulations! 🎉 You won!'
         : 'Oh no... You lost 😭'}
     </p>
+  );
+}
+
+function GuessTable({ guessHistory }) {
+  return (
+    <table className="guess-table">
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>Guess</th>
+          <th>Hint</th>
+        </tr>
+      </thead>
+      <tbody>
+        {guessHistory.map(cur => (
+          <GuessTableRow key={cur.step} curGuess={cur} />
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+function GuessTableRow({ curGuess }) {
+  return (
+    <tr>
+      <td>{curGuess.step}</td>
+      <td>{curGuess.guess}</td>
+      <td>
+        <span class="badge correct">{curGuess.hint.correctPositions}</span>
+        <span class="badge incorrect">{curGuess.hint.incorrectPositions}</span>
+      </td>
+    </tr>
   );
 }
