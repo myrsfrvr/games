@@ -12,6 +12,10 @@ function HomePage() {
             <span>Guess</span> the Sequence
           </Link>
 
+          <Link to="/memory-cards" className="home-card">
+            Memory cards
+          </Link>
+
           <a href="#" className="home-card tba">
             To be announced
           </a>
