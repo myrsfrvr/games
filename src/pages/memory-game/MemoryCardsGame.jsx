@@ -9,6 +9,12 @@ export default function MemoryCardsGame() {
         <MemoryCard key={i} />
       ))}
       <MovesCounter />
+
+      {/* Background decoration */}
+      <div className="planet-glow"></div>
+      <div class="stars stars-small"></div>
+      <div class="stars stars-medium"></div>
+      <div class="stars stars-big"></div>
     </section>
   );
 }
