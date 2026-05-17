@@ -329,8 +329,12 @@ GAME CARD
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
 
   -webkit-mask-composite: xor;
+  mask-composite: xor;
 
   opacity: 0.55;
 }
@@ -563,4 +567,147 @@ BACKGROUND
   50% {
     opacity: 1;
   }
+}
+
+/*
+////////////////////////////
+POPUP
+////////////////////////////
+*/
+
+.memory-popup-overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(3, 6, 20, 0.45);
+
+  backdrop-filter: blur(14px);
+
+  z-index: 100;
+}
+
+.memory-popup {
+  position: relative;
+
+  width: 44rem;
+  padding: 4rem 3rem;
+  border-radius: 3rem;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.06)
+  );
+
+  border: 1px solid rgba(180, 220, 255, 0.12);
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    inset 0 0 20px rgba(255, 255, 255, 0.04),
+    0 0 40px rgba(80, 140, 255, 0.14),
+    0 0 90px rgba(220, 120, 255, 0.08);
+}
+
+.memory-popup::after {
+  content: '';
+
+  position: absolute;
+
+  inset: -30%;
+
+  background: radial-gradient(
+    circle,
+    rgba(120, 180, 255, 0.1),
+    rgba(255, 120, 220, 0.06),
+    transparent 70%
+  );
+
+  pointer-events: none;
+}
+
+.memory-popup-link {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 1.4rem 2rem;
+  border-radius: 1.8rem;
+  border: 1px solid rgba(180, 220, 255, 0.14);
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.03)
+  );
+
+  color: #eef4ff;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 2rem;
+  font-family: 'Orbitron', serif;
+
+  text-align: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+
+  box-shadow:
+    inset 0 0 12px rgba(255, 255, 255, 0.04),
+    0 0 18px rgba(96, 160, 255, 0.1);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.memory-popup-link:hover {
+  transform: translateY(-2px) scale(1.02);
+
+  background: linear-gradient(
+    135deg,
+    rgba(220, 234, 255, 0.2),
+    rgba(192, 225, 252, 0.08)
+  );
+
+  box-shadow:
+    inset 0 0 16px rgba(255, 255, 255, 0.06),
+    0 0 24px rgba(100, 180, 255, 0.16),
+    0 0 50px rgba(220, 120, 255, 0.08);
+}
+
+.memory-popup-play-again {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 120, 140, 0.18),
+    rgba(255, 70, 120, 0.08)
+  );
+
+  border: 1px solid rgba(255, 120, 160, 0.18);
+
+  box-shadow:
+    inset 0 0 12px rgba(255, 255, 255, 0.04),
+    0 0 20px rgba(255, 80, 140, 0.12);
+}
+
+.memory-popup-play-again:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 140, 160, 0.28),
+    rgba(255, 70, 120, 0.14)
+  );
+
+  box-shadow:
+    inset 0 0 18px rgba(255, 255, 255, 0.06),
+    0 0 28px rgba(255, 100, 160, 0.2),
+    0 0 60px rgba(255, 80, 140, 0.12);
 }

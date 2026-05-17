@@ -1,4 +1,5 @@
 import './MemoryCards.css';
+import { Link } from 'react-router-dom';
 import { CiPause1 } from 'react-icons/ci';
 import {
   BsFillSuitSpadeFill,
@@ -6,7 +7,7 @@ import {
   BsFillSuitDiamondFill,
   BsFillSuitClubFill,
 } from 'react-icons/bs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const suits = {
   spade: {
@@ -31,28 +32,29 @@ const suits = {
 };
 
 function shuffle(array) {
-  let currentIndex = array.length;
+  let newArray = [...array];
+  let currentIndex = newArray.length;
 
   while (currentIndex != 0) {
     let randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
+    [newArray[currentIndex], newArray[randomIndex]] = [
+      newArray[randomIndex],
+      newArray[currentIndex],
     ];
   }
 
-  return array;
+  return newArray;
 }
 
-const cardsInit = shuffle([
+const cardsInit = [
   {
     id: 1,
     pairId: 'spade-A',
     value: 'A',
     suit: 'spade',
-    isFlipped: false,
+    isFlipped: true,
     isMatched: false,
   },
   {
@@ -60,7 +62,7 @@ const cardsInit = shuffle([
     pairId: 'spade-A',
     value: 'A',
     suit: 'spade',
-    isFlipped: false,
+    isFlipped: true,
     isMatched: false,
   },
   {
@@ -68,7 +70,7 @@ const cardsInit = shuffle([
     pairId: 'heart-6',
     value: '6',
     suit: 'heart',
-    isFlipped: false,
+    isFlipped: true,
     isMatched: false,
   },
   {
@@ -76,7 +78,7 @@ const cardsInit = shuffle([
     pairId: 'heart-6',
     value: '6',
     suit: 'heart',
-    isFlipped: false,
+    isFlipped: true,
     isMatched: false,
   },
   {
@@ -84,7 +86,7 @@ const cardsInit = shuffle([
     pairId: 'diamond-8',
     value: '8',
     suit: 'diamond',
-    isFlipped: false,
+    isFlipped: true,
     isMatched: false,
   },
   {
@@ -92,7 +94,7 @@ const cardsInit = shuffle([
     pairId: 'diamond-8',
     value: '8',
     suit: 'diamond',
-    isFlipped: false,
+    isFlipped: true,
     isMatched: false,
   },
   {
@@ -100,7 +102,7 @@ const cardsInit = shuffle([
     pairId: 'club-10',
     value: '10',
     suit: 'club',
-    isFlipped: false,
+    isFlipped: true,
     isMatched: false,
   },
   {
@@ -108,22 +110,44 @@ const cardsInit = shuffle([
     pairId: 'club-10',
     value: '10',
     suit: 'club',
-    isFlipped: false,
+    isFlipped: true,
     isMatched: false,
   },
-]);
+];
 
 // TODO:
-// массив со всеми картами
-// если значение цифра, то должно быть столько же иконок посередине как и у цифры
-// если значение аля Д К В то нужно найти иконки чтобы их заменить
-// если пар 4, то: Т К Д В 10 8 6 4
-// если пар 10, то: Т К Д В 10 9 8 7 6 5 4 3 2
+// design: if card has  a number, then add that amount of symbols in the centre
+// if card is a King, Queen or Jack, add pics or icons
 
 export default function MemoryCardsGame() {
-  const [cards, setCards] = useState(cardsInit);
+  const [cards, setCards] = useState(createCards());
   const [selectedCards, setSelectedCards] = useState([]);
   const [isChecking, setIsChecking] = useState(false);
+  const isGameFinished = cards.every(card => card.isMatched);
+
+  function createCards() {
+    return shuffle(cardsInit);
+  }
+
+  function startRound() {
+    setCards(prev =>
+      prev.map(el => {
+        return { ...el, isFlipped: false };
+      }),
+    );
+  }
+
+  useEffect(
+    function () {
+      const timer = setTimeout(() => {
+        startRound();
+      }, 1700);
+
+      // If component unmounts before timeout finishes, remove the timeout.
+      return () => clearTimeout(timer);
+    },
+    [cards],
+  );
 
   function handleSelectCard(card) {
     if (isChecking) return;
@@ -157,14 +181,20 @@ export default function MemoryCardsGame() {
         ),
       );
     } else {
-      setCards(prev => [
-        ...prev.map(el =>
+      setCards(prev =>
+        prev.map(el =>
           el.id === selected[0].id || el.id === selected[1].id
             ? { ...el, isFlipped: false }
             : el,
         ),
-      ]);
+      );
     }
+    setSelectedCards([]);
+    setIsChecking(false);
+  }
+
+  function handleNewGame() {
+    setCards(createCards());
     setSelectedCards([]);
     setIsChecking(false);
   }
@@ -184,6 +214,7 @@ export default function MemoryCardsGame() {
           />
         ))}
       </div>
+      {isGameFinished && <PausePopup onNewGame={handleNewGame} />}
 
       {/* Background decoration */}
       <div className="stars stars-small"></div>
@@ -239,6 +270,24 @@ function MemoryCard({ card, onSelectCard }) {
           <div className="card-center">?</div>
         </div>
       )}
+    </div>
+  );
+}
+
+function PausePopup({ onNewGame }) {
+  return (
+    <div className="memory-popup-overlay">
+      <div className="memory-popup">
+        <button
+          className="memory-popup-link memory-popup-play-again"
+          onClick={onNewGame}
+        >
+          Play again
+        </button>
+        <Link to="/memory-cards" className="memory-popup-link">
+          Menu
+        </Link>
+      </div>
     </div>
   );
 }
