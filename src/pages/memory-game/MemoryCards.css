@@ -155,6 +155,125 @@
 
 /* 
 ///////////////////////////////////////
+MENU BAR
+///////////////////////////////////////
+*/
+
+.memory-menu-bar {
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 1.8rem;
+}
+
+.memory-timer {
+  position: relative;
+  padding: 2rem;
+}
+
+.memory-timer::before {
+  content: '';
+  width: 30rem;
+  height: 30rem;
+  position: absolute;
+  border-radius: 50%;
+  left: -15rem;
+  top: -21rem;
+
+  background: radial-gradient(
+    circle at 75% 85%,
+    rgba(17, 99, 206, 0.35),
+    rgba(81, 60, 243, 0.18) 20%,
+    rgba(255, 120, 220, 0.1) 35%,
+    transparent 75%
+  );
+}
+
+.memory-actions {
+  position: relative;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: 1.5rem;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(17, 99, 206, 0.35),
+    rgba(81, 60, 243, 0.18) 50%,
+    rgba(255, 120, 220, 0.1) 85%,
+    transparent 85%
+  );
+
+  border: 1px solid rgba(180, 220, 255, 0.12);
+
+  box-shadow: 0 0 16px rgba(90, 140, 255, 0.14);
+
+  transition: all 0.2s ease-in-out;
+}
+
+.memory-actions::before {
+  content: '';
+  position: absolute;
+
+  border-radius: 50%;
+  width: 4.5rem;
+  height: 4.5rem;
+  opacity: 0;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(17, 99, 206, 0.441),
+    rgba(81, 60, 243, 0.37) 50%,
+    rgba(255, 120, 219, 0.322) 85%,
+    transparent 85%
+  );
+
+  transition: opacity 0.35s ease;
+}
+
+.memory-actions:hover::before {
+  opacity: 1;
+}
+
+.memory-actions svg {
+  z-index: 2;
+}
+
+.memory-actions:hover {
+  box-shadow:
+    0 0 14px rgba(100, 180, 255, 0.183),
+    0 0 20px rgba(219, 120, 255, 0.025);
+}
+
+/* 
+///////////////////////////////////////
+GRID
+///////////////////////////////////////
+*/
+
+.memory-grid {
+  width: 90rem;
+  margin: 0 auto;
+}
+
+.grid-2x4 {
+  display: grid;
+  justify-content: center;
+  /* align-items: center; */
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  row-gap: 2rem;
+  column-gap: 0.8rem;
+}
+
+/* 
+///////////////////////////////////////
 GAME CARD
 ///////////////////////////////////////
 */
@@ -165,26 +284,27 @@ GAME CARD
   width: 18rem;
   height: 24rem;
 
-  border-radius: 2rem;
+  border-radius: 2.4rem;
 
   overflow: hidden;
 
   background: linear-gradient(
-    160deg,
-    rgba(120, 170, 255, 0.18),
-    rgba(255, 255, 255, 0.03)
+    145deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
   );
 
-  border: 1px solid rgba(180, 220, 255, 0.18);
+  border: 1px solid rgba(180, 220, 255, 0.15);
 
   backdrop-filter: blur(12px);
 
   box-shadow:
-    0 0 20px rgba(70, 140, 255, 0.22),
-    0 0 40px rgba(190, 90, 255, 0.1);
+    inset 0 0 12px rgba(255, 255, 255, 0.04),
+    0 0 24px rgba(80, 140, 255, 0.16),
+    0 0 60px rgba(190, 90, 255, 0.08);
 
   transition:
-    transform 0.25s ease,
+    transform 0.35s ease-in-out,
     box-shadow 0.25s ease;
 }
 
@@ -198,35 +318,37 @@ GAME CARD
 
   padding: 1px;
 
-  background: linear-gradient(135deg, #73dfff, #9d7bff, #ff7ae6);
+  background: linear-gradient(
+    135deg,
+    rgba(130, 220, 255, 0.9),
+    rgba(180, 120, 255, 0.9),
+    rgba(255, 140, 220, 0.9)
+  );
 
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
 
   -webkit-mask-composite: xor;
-  mask-composite: xor;
 
-  opacity: 0.8;
+  opacity: 0.55;
 }
 
 .memory-card::after {
   content: '';
 
   position: absolute;
-  top: -30%;
-  left: -50%;
 
-  width: 70%;
+  top: -30%;
+  left: -60%;
+
+  width: 60%;
   height: 180%;
 
   background: linear-gradient(
     to right,
     transparent,
-    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.18),
     transparent
   );
 
@@ -235,15 +357,68 @@ GAME CARD
   animation: cardSweep 5s linear infinite;
 }
 
-.memory-card:hover {
-  transform: translateY(-6px) scale(1.03);
+.memory-card-inner {
+  position: relative;
 
-  box-shadow:
-    0 0 30px rgba(100, 180, 255, 0.35),
-    0 0 60px rgba(200, 120, 255, 0.18);
+  width: 100%;
+  height: 100%;
+
+  padding: 1.4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Background decoration */
+.card-center {
+  font-size: 7rem;
+
+  filter: drop-shadow(0 0 10px currentColor) drop-shadow(0 0 24px currentColor);
+
+  opacity: 0.95;
+}
+
+.card-corner {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 0.2rem;
+
+  font-size: 2rem;
+  font-weight: 700;
+
+  text-shadow: 0 0 8px currentColor;
+}
+
+.card-corner.top {
+  top: 1.4rem;
+  left: 1.4rem;
+}
+
+.card-corner.bottom {
+  bottom: 1.4rem;
+  right: 1.4rem;
+
+  transform: rotate(180deg);
+}
+
+.memory-card:hover {
+  transform: translateY(-2px) scale(1.03);
+
+  box-shadow:
+    inset 0 0 20px rgba(255, 255, 255, 0.06),
+    0 0 36px rgba(100, 180, 255, 0.22),
+    0 0 80px rgba(220, 120, 255, 0.12);
+}
+
+/* 
+//////////////////////////
+BACKGROUND
+//////////////////////////
+*/
 
 .planet-glow {
   position: absolute;
@@ -270,21 +445,6 @@ GAME CARD
 
   pointer-events: none;
 }
-
-/* .planet-glow::after {
-  content: '';
-
-  position: absolute;
-  inset: 12%;
-
-  border-radius: 50%;
-
-  border: 1px solid rgba(180, 220, 255, 0.12);
-
-  box-shadow: 0 0 30px rgba(140, 180, 255, 0.18);
-
-  transform: rotate(-18deg) scaleY(0.7);
-} */
 
 .stars {
   position: absolute;
