@@ -6,6 +6,7 @@ import {
   BsFillSuitDiamondFill,
   BsFillSuitClubFill,
 } from 'react-icons/bs';
+import { useState } from 'react';
 
 const suits = {
   spade: {
@@ -29,6 +30,89 @@ const suits = {
   },
 };
 
+function shuffle(array) {
+  let currentIndex = array.length;
+
+  while (currentIndex != 0) {
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
+
+const cardsInit = shuffle([
+  {
+    id: 1,
+    pairId: 'spade-A',
+    value: 'A',
+    suit: 'spade',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 2,
+    pairId: 'spade-A',
+    value: 'A',
+    suit: 'spade',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 3,
+    pairId: 'heart-6',
+    value: '6',
+    suit: 'heart',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 4,
+    pairId: 'heart-6',
+    value: '6',
+    suit: 'heart',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 5,
+    pairId: 'diamond-8',
+    value: '8',
+    suit: 'diamond',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 6,
+    pairId: 'diamond-8',
+    value: '8',
+    suit: 'diamond',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 7,
+    pairId: 'club-10',
+    value: '10',
+    suit: 'club',
+    isFlipped: false,
+    isMatched: false,
+  },
+  {
+    id: 8,
+    pairId: 'club-10',
+    value: '10',
+    suit: 'club',
+    isFlipped: false,
+    isMatched: false,
+  },
+]);
+
 // TODO:
 // массив со всеми картами
 // если значение цифра, то должно быть столько же иконок посередине как и у цифры
@@ -37,30 +121,74 @@ const suits = {
 // если пар 10, то: Т К Д В 10 9 8 7 6 5 4 3 2
 
 export default function MemoryCardsGame() {
+  const [cards, setCards] = useState(cardsInit);
+  const [selectedCards, setSelectedCards] = useState([]);
+  const [isChecking, setIsChecking] = useState(false);
+
+  function handleSelectCard(card) {
+    if (isChecking) return;
+    if (card.isFlipped || card.isMatched) return;
+
+    setCards(prev => [
+      ...prev.map(el => (el.id === card.id ? { ...el, isFlipped: true } : el)),
+    ]);
+
+    setSelectedCards(prev => {
+      const updated = [...prev, card];
+
+      if (updated.length === 2) {
+        setIsChecking(true);
+        setTimeout(() => {
+          checkMatch(updated);
+        }, 1000);
+      }
+
+      return updated;
+    });
+  }
+
+  function checkMatch(selected) {
+    if (selected[0].pairId === selected[1].pairId) {
+      setCards(prev =>
+        prev.map(el =>
+          el.id === selected[0].id || el.id === selected[1].id
+            ? { ...el, isMatched: true }
+            : el,
+        ),
+      );
+    } else {
+      setCards(prev => [
+        ...prev.map(el =>
+          el.id === selected[0].id || el.id === selected[1].id
+            ? { ...el, isFlipped: false }
+            : el,
+        ),
+      ]);
+    }
+    setSelectedCards([]);
+    setIsChecking(false);
+  }
+
   return (
     <section className="memory-game-menu">
       <div className="memory-menu-bar">
         <Timer />
         <MemoryGameActions />
       </div>
-      {/* {new Array(8).fill(null).map((_, i) => (
-        <MemoryCard key={i} />
-      ))} */}
       <div className="memory-grid grid-2x4">
-        <MemoryCard value="A" suit="spade" />
-        <MemoryCard value="6" suit="heart" />
-        <MemoryCard value="8" suit="diamond" />
-        <MemoryCard value="10" suit="club" />
-        <MemoryCard value="6" suit="heart" />
-        <MemoryCard value="10" suit="club" />
-        <MemoryCard value="A" suit="spade" />
-        <MemoryCard value="8" suit="diamond" />
+        {cards.map(card => (
+          <MemoryCard
+            key={card.id}
+            card={card}
+            onSelectCard={handleSelectCard}
+          />
+        ))}
       </div>
 
       {/* Background decoration */}
-      <div class="stars stars-small"></div>
-      <div class="stars stars-medium"></div>
-      <div class="stars stars-big"></div>
+      <div className="stars stars-small"></div>
+      <div className="stars stars-medium"></div>
+      <div className="stars stars-big"></div>
     </section>
   );
 }
@@ -81,26 +209,36 @@ function MemoryGameActions() {
   );
 }
 
-function MemoryCard({ value, suit }) {
-  const suitData = suits[suit];
+function MemoryCard({ card, onSelectCard }) {
+  const suitData = suits[card.suit];
 
   return (
-    <div className="memory-card">
-      <div className="memory-card-inner">
-        <div className="card-corner top" style={{ color: suitData.color }}>
-          <span>{value}</span>
-          {suitData.icon}
-        </div>
+    <div
+      className="memory-card"
+      onClick={() => onSelectCard(card)}
+      style={card.isMatched ? { opacity: 0 } : {}}
+    >
+      {card.isFlipped ? (
+        <div className="memory-card-inner">
+          <div className="card-corner top" style={{ color: suitData.color }}>
+            <span>{card.value}</span>
+            {suitData.icon}
+          </div>
 
-        <div className="card-center" style={{ color: suitData.color }}>
-          {suitData.icon}
-        </div>
+          <div className="card-center" style={{ color: suitData.color }}>
+            {suitData.icon}
+          </div>
 
-        <div className="card-corner bottom" style={{ color: suitData.color }}>
-          <span>{value}</span>
-          {suitData.icon}
+          <div className="card-corner bottom" style={{ color: suitData.color }}>
+            <span>{card.value}</span>
+            {suitData.icon}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="memory-card-inner">
+          <div className="card-center">?</div>
+        </div>
+      )}
     </div>
   );
 }

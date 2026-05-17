@@ -29,9 +29,9 @@ export default function MemoryCardsMenu() {
 
       {/* Background decoration */}
       <div className="planet-glow"></div>
-      <div class="stars stars-small"></div>
-      <div class="stars stars-medium"></div>
-      <div class="stars stars-big"></div>
+      <div className="stars stars-small"></div>
+      <div className="stars stars-medium"></div>
+      <div className="stars stars-big"></div>
     </section>
   );
 }
