@@ -605,8 +605,8 @@ POPUP
 
   background: linear-gradient(
     145deg,
-    rgba(255, 255, 255, 0.12),
-    rgba(255, 255, 255, 0.06)
+    rgba(2, 50, 153, 0.42),
+    rgba(2, 71, 181, 0.06)
   );
 
   border: 1px solid rgba(180, 220, 255, 0.12);
@@ -633,6 +633,25 @@ POPUP
   );
 
   pointer-events: none;
+}
+
+.memory-popup-title {
+  position: relative;
+
+  font-size: 3.6rem;
+  font-weight: 700;
+
+  color: #f4f7ff;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 10px rgba(180, 220, 255, 0.18),
+    0 0 30px rgba(120, 140, 255, 0.12);
+
+  z-index: 2;
 }
 
 .memory-popup-link {

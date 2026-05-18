@@ -120,13 +120,21 @@ const cardsInit = [
 // if card is a King, Queen or Jack, add pics or icons
 
 export default function MemoryCardsGame() {
-  const [cards, setCards] = useState(createCards());
+  const [cards, setCards] = useState(() => createCards());
   const [selectedCards, setSelectedCards] = useState([]);
   const [isChecking, setIsChecking] = useState(false);
-  const isGameFinished = cards.every(card => card.isMatched);
+  const [gameId, setGameId] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(15);
+  const [isGameStarted, setIsGameStarted] = useState(false);
+  const isGameWon = cards.length > 0 && cards.every(card => card.isMatched);
+  const isGameLost = timeLeft === 0;
 
   function createCards() {
-    return shuffle(cardsInit);
+    return shuffle(
+      cardsInit.map(card => ({
+        ...card,
+      })),
+    );
   }
 
   function startRound() {
@@ -135,6 +143,7 @@ export default function MemoryCardsGame() {
         return { ...el, isFlipped: false };
       }),
     );
+    setIsGameStarted(true);
   }
 
   useEffect(
@@ -146,11 +155,27 @@ export default function MemoryCardsGame() {
       // If component unmounts before timeout finishes, remove the timeout.
       return () => clearTimeout(timer);
     },
-    [cards],
+    [gameId],
   );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isGameStarted]);
 
   function handleSelectCard(card) {
     if (isChecking) return;
+    if (!isGameStarted) return;
     if (card.isFlipped || card.isMatched) return;
 
     setCards(prev => [
@@ -197,12 +222,16 @@ export default function MemoryCardsGame() {
     setCards(createCards());
     setSelectedCards([]);
     setIsChecking(false);
+    setTimeLeft(15);
+    setIsGameStarted(false);
+
+    setGameId(prev => prev + 1);
   }
 
   return (
     <section className="memory-game-menu">
       <div className="memory-menu-bar">
-        <Timer />
+        <Timer timeLeft={timeLeft} />
         <MemoryGameActions />
       </div>
       <div className="memory-grid grid-2x4">
@@ -214,7 +243,10 @@ export default function MemoryCardsGame() {
           />
         ))}
       </div>
-      {isGameFinished && <PausePopup onNewGame={handleNewGame} />}
+      {isGameLost && (
+        <PausePopup onNewGame={handleNewGame}>Time's up!</PausePopup>
+      )}
+      {isGameWon && <PausePopup onNewGame={handleNewGame}>You won!</PausePopup>}
 
       {/* Background decoration */}
       <div className="stars stars-small"></div>
@@ -224,10 +256,15 @@ export default function MemoryCardsGame() {
   );
 }
 
-function Timer() {
+function Timer({ timeLeft }) {
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+
   return (
     <div className="memory-timer">
-      <p className="">01:24</p>
+      <p className="">
+        {minutes}:{String(seconds).padStart(2, '0')}
+      </p>
     </div>
   );
 }
@@ -274,10 +311,11 @@ function MemoryCard({ card, onSelectCard }) {
   );
 }
 
-function PausePopup({ onNewGame }) {
+function PausePopup({ onNewGame, children }) {
   return (
     <div className="memory-popup-overlay">
       <div className="memory-popup">
+        <h2 className="memory-popup-title">{children}</h2>
         <button
           className="memory-popup-link memory-popup-play-again"
           onClick={onNewGame}
