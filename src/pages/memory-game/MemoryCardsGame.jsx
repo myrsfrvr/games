@@ -126,6 +126,7 @@ export default function MemoryCardsGame() {
   const [gameId, setGameId] = useState(0);
   const [timeLeft, setTimeLeft] = useState(15);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const isGameWon = cards.length > 0 && cards.every(card => card.isMatched);
   const isGameLost = timeLeft === 0;
 
@@ -159,6 +160,8 @@ export default function MemoryCardsGame() {
   );
 
   useEffect(() => {
+    if (!isGameStarted || isPaused) return;
+
     const interval = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
@@ -171,7 +174,7 @@ export default function MemoryCardsGame() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isGameStarted]);
+  }, [isGameStarted, isPaused]);
 
   function handleSelectCard(card) {
     if (isChecking) return;
@@ -224,15 +227,27 @@ export default function MemoryCardsGame() {
     setIsChecking(false);
     setTimeLeft(15);
     setIsGameStarted(false);
+    setIsPaused(false);
 
     setGameId(prev => prev + 1);
+  }
+
+  function handlePause() {
+    setIsPaused(true);
+  }
+
+  function handleResume() {
+    setIsPaused(false);
   }
 
   return (
     <section className="memory-game-menu">
       <div className="memory-menu-bar">
         <Timer timeLeft={timeLeft} />
-        <MemoryGameActions />
+        <MemoryGameActions
+          isGameStarted={isGameStarted}
+          onPause={handlePause}
+        />
       </div>
       <div className="memory-grid grid-2x4">
         {cards.map(card => (
@@ -247,6 +262,11 @@ export default function MemoryCardsGame() {
         <PausePopup onNewGame={handleNewGame}>Time's up!</PausePopup>
       )}
       {isGameWon && <PausePopup onNewGame={handleNewGame}>You won!</PausePopup>}
+      {isPaused && (
+        <PausePopup onResume={handleResume} onNewGame={handleNewGame}>
+          Pause
+        </PausePopup>
+      )}
 
       {/* Background decoration */}
       <div className="stars stars-small"></div>
@@ -269,9 +289,12 @@ function Timer({ timeLeft }) {
   );
 }
 
-function MemoryGameActions() {
+function MemoryGameActions({ isGameStarted, onPause }) {
   return (
-    <div className="memory-actions">
+    <div
+      className={`memory-actions ${isGameStarted ? '' : 'memory-actions-disabled'}`}
+      onClick={onPause}
+    >
       <CiPause1 />
     </div>
   );
@@ -311,11 +334,16 @@ function MemoryCard({ card, onSelectCard }) {
   );
 }
 
-function PausePopup({ onNewGame, children }) {
+function PausePopup({ onNewGame, onResume, children }) {
   return (
     <div className="memory-popup-overlay">
       <div className="memory-popup">
         <h2 className="memory-popup-title">{children}</h2>
+        {onResume ? (
+          <button className="memory-popup-link" onClick={onResume}>
+            Resume
+          </button>
+        ) : null}
         <button
           className="memory-popup-link memory-popup-play-again"
           onClick={onNewGame}

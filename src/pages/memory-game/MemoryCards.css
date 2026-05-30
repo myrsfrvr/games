@@ -251,6 +251,11 @@ MENU BAR
     0 0 20px rgba(219, 120, 255, 0.025);
 }
 
+.memory-actions-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
 /* 
 ///////////////////////////////////////
 GRID
