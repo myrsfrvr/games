@@ -7,6 +7,7 @@
   overflow: hidden;
 
   min-height: 100vh;
+  overflow-x: hidden;
 
   background:
     radial-gradient(circle at top, rgba(120, 140, 255, 0.15), transparent 40%),
@@ -159,6 +160,7 @@
 }
 
 .memory-rules-popup {
+  width: min(62rem, 92vw);
   align-items: stretch;
 }
 
@@ -334,6 +336,7 @@ GRID
 */
 
 .memory-grid {
+  max-width: 90%;
   width: 90rem;
   margin: 0 auto;
 }
@@ -669,7 +672,7 @@ POPUP
 .memory-popup {
   position: relative;
 
-  width: 44rem;
+  width: min(44rem, 90vw);
   padding: 4rem 3rem;
   border-radius: 3rem;
   overflow: hidden;
@@ -807,6 +810,129 @@ POPUP
     0 0 60px rgba(255, 80, 140, 0.12);
 }
 
-.memory-rules-popup {
+/* .memory-rules-popup {
   width: 62rem;
+} */
+
+/* 
+/////////////////////////////////
+// BREAKPOINTS
+/////////////////////////////////
+*/
+
+@media (max-width: 56.25em) {
+  /* 900px */
+  .memory-grid {
+    width: 100%;
+  }
+
+  .grid-2x4 {
+    column-gap: 1rem;
+  }
+
+  .memory-card {
+    width: 15rem;
+    height: 20rem;
+  }
+
+  .card-center {
+    font-size: 5.5rem;
+  }
+
+  .memory-timer::before {
+    width: 24rem;
+    height: 24rem;
+
+    left: -12rem;
+    top: -17rem;
+  }
+}
+
+@media (max-width: 48em) {
+  /* 768px */
+  .memory-card {
+    width: 13rem;
+    height: 17rem;
+  }
+
+  .card-center {
+    font-size: 4.5rem;
+  }
+
+  .card-corner {
+    font-size: 1.6rem;
+  }
+
+  .memory-title {
+    font-size: 6rem;
+    padding: 2rem;
+  }
+
+  .memory-menu-link {
+    width: 26rem;
+    font-size: 2.6rem;
+  }
+}
+
+@media (max-width: 37.5em) {
+  /* 600px */
+
+  .memory-title {
+    font-size: 5rem;
+  }
+
+  .memory-grid {
+    max-width: 60%;
+  }
+
+  .grid-2x4 {
+    grid-template-columns: repeat(2, 1fr);
+
+    justify-items: center;
+
+    row-gap: 1rem;
+    column-gap: 1rem;
+  }
+
+  .memory-card {
+    width: 14rem;
+    height: 18rem;
+  }
+
+  .memory-grid {
+    width: 100%;
+  }
+}
+
+@media (max-width: 27.68em) {
+  /* 420px */
+  .memory-card {
+    width: 11rem;
+    height: 15rem;
+  }
+
+  .card-center {
+    font-size: 3.8rem;
+  }
+
+  .card-corner {
+    font-size: 1.2rem;
+  }
+
+  .memory-title {
+    font-size: 4rem;
+  }
+
+  .memory-menu-link {
+    width: 20rem;
+    font-size: 2rem;
+  }
+
+  .memory-popup {
+    width: 90%;
+  }
+
+  .memory-rules-popup {
+    width: 90%;
+  }
 }
