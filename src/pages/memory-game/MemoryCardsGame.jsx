@@ -113,6 +113,86 @@ const cardsInit = [
     isFlipped: true,
     isMatched: false,
   },
+  // {
+  //   id: 9,
+  //   pairId: 'spade-K',
+  //   value: 'K',
+  //   suit: 'spade',
+  //   isFlipped: true,
+  //   isMatched: false,
+  // },
+  // {
+  //   id: 10,
+  //   pairId: 'spade-K',
+  //   value: 'K',
+  //   suit: 'spade',
+  //   isFlipped: true,
+  //   isMatched: false,
+  // },
+  // {
+  //   id: 11,
+  //   pairId: 'heart-Q',
+  //   value: 'Q',
+  //   suit: 'heart',
+  //   isFlipped: true,
+  //   isMatched: false,
+  // },
+  // {
+  //   id: 12,
+  //   pairId: 'heart-Q',
+  //   value: 'Q',
+  //   suit: 'heart',
+  //   isFlipped: true,
+  //   isMatched: false,
+  // },
+  // {
+  //   id: 13,
+  //   pairId: 'diamond-5',
+  //   value: '5',
+  //   suit: 'diamond',
+  //   isFlipped: true,
+  //   isMatched: false,
+  // },
+  // {
+  //   id: 14,
+  //   pairId: 'diamond-5',
+  //   value: '5',
+  //   suit: 'diamond',
+  //   isFlipped: true,
+  //   isMatched: false,
+  // },
+  // {
+  //   id: 15,
+  //   pairId: 'club-7',
+  //   value: '7',
+  //   suit: 'club',
+  //   isFlipped: true,
+  //   isMatched: false,
+  // },
+  // {
+  //   id: 16,
+  //   pairId: 'club-7',
+  //   value: '7',
+  //   suit: 'club',
+  //   isFlipped: true,
+  //   isMatched: false,
+  // },
+  // {
+  //   id: 17,
+  //   pairId: 'heart-J',
+  //   value: 'J',
+  //   suit: 'heart',
+  //   isFlipped: true,
+  //   isMatched: false,
+  // },
+  // {
+  //   id: 18,
+  //   pairId: 'heart-J',
+  //   value: 'J',
+  //   suit: 'heart',
+  //   isFlipped: true,
+  //   isMatched: false,
+  // },
 ];
 
 // TODO:
@@ -124,7 +204,7 @@ export default function MemoryCardsGame() {
   const [selectedCards, setSelectedCards] = useState([]);
   const [isChecking, setIsChecking] = useState(false);
   const [gameId, setGameId] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(15);
+  const [timeLeft, setTimeLeft] = useState(25);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const isGameWon = cards.length > 0 && cards.every(card => card.isMatched);
@@ -179,6 +259,7 @@ export default function MemoryCardsGame() {
   function handleSelectCard(card) {
     if (isChecking) return;
     if (!isGameStarted) return;
+    if (isPaused) return;
     if (card.isFlipped || card.isMatched) return;
 
     setCards(prev => [
@@ -192,7 +273,7 @@ export default function MemoryCardsGame() {
         setIsChecking(true);
         setTimeout(() => {
           checkMatch(updated);
-        }, 1000);
+        }, 800);
       }
 
       return updated;
@@ -225,7 +306,7 @@ export default function MemoryCardsGame() {
     setCards(createCards());
     setSelectedCards([]);
     setIsChecking(false);
-    setTimeLeft(15);
+    setTimeLeft(25);
     setIsGameStarted(false);
     setIsPaused(false);
 

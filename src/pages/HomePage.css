@@ -47,6 +47,12 @@
   transform: scale(1.05);
 }
 
+/* 
+//////////////////////////////
+// GUESS SEQUENCE
+//////////////////////////////
+*/
+
 .guess-sequence {
   font-size: 2.5rem;
   font-weight: 600;
@@ -66,6 +72,202 @@
   border-radius: 10rem;
   box-shadow: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
 }
+
+/* 
+//////////////////////////////
+// MEMORY CARDS
+//////////////////////////////
+*/
+
+.memory-game {
+  position: relative;
+  overflow: hidden;
+  font-family: 'Orbitron', serif;
+
+  font-size: 2.5rem;
+  font-weight: 800;
+
+  color: #f4f7ff;
+
+  letter-spacing: 0.04em;
+
+  text-shadow:
+    0 0 10px rgba(180, 220, 255, 0.18),
+    0 0 30px rgba(120, 140, 255, 0.12);
+
+  background:
+    radial-gradient(circle at top, rgba(120, 140, 255, 0.15), transparent 40%),
+    radial-gradient(
+      circle at bottom right,
+      rgba(255, 0, 180, 0.1),
+      transparent 35%
+    ),
+    linear-gradient(180deg, #050816 0%, #081120 45%, #090b1d 100%);
+}
+
+.memory-game span {
+  display: block;
+  margin-right: -10rem;
+}
+
+.memory-game::before {
+  content: '';
+  width: 1px;
+  height: 1px;
+  border-radius: 50%;
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background: transparent;
+
+  box-shadow:
+    20px 20px #fff,
+    95px 60px #9fd3ff,
+    320px 50px #fff,
+    180px 80px #ffdfff,
+    340px 25px #9fd3ff,
+    270px 15px #ffdfff;
+}
+
+.memory-game::after {
+  content: '';
+
+  position: absolute;
+
+  width: 120px;
+  height: 120px;
+
+  left: -40px;
+  bottom: -40px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(140, 190, 255, 0.468),
+    rgba(109, 90, 255, 0.484),
+    transparent 70%
+  );
+
+  filter: blur(10px);
+
+  pointer-events: none;
+}
+
+.shooting-star {
+  position: absolute;
+  /* top: 15%;
+  right: -8rem; */
+  top: 5px;
+  right: -4rem;
+
+  width: 8rem;
+  height: 2px;
+
+  opacity: 0;
+
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8));
+}
+
+.shooting-star-head {
+  position: absolute;
+  right: 0;
+  top: -2px;
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  box-shadow:
+    0 0 5px white,
+    0 0 12px #9fd3ff,
+    0 0 24px #9fd3ff;
+}
+
+.memory-game:hover .shooting-star {
+  animation: shootingStar 2s ease-out 1s forwards;
+}
+
+@keyframes shootingStar {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(135deg);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-8rem, 8rem) rotate(135deg);
+  }
+}
+
+.memory-card-title {
+  position: relative;
+  /* overflow: hidden; */
+}
+
+.memory-card-title::after {
+  content: '';
+
+  position: absolute;
+  top: -20%;
+  left: -150%;
+
+  width: 60%;
+  height: 140%;
+
+  transform: skewX(-25deg);
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.95),
+    transparent
+  );
+
+  opacity: 0;
+}
+
+.memory-game:hover .memory-card-title {
+  animation: titleGlow 1s ease-out;
+}
+
+@keyframes titleGlow {
+  0% {
+    text-shadow:
+      0 0 10px rgba(180, 220, 255, 0.18),
+      0 0 30px rgba(120, 140, 255, 0.12);
+  }
+
+  50% {
+    text-shadow:
+      0 0 12px #fff,
+      0 0 25px rgba(159, 210, 255, 0.705),
+      0 0 45px rgba(159, 211, 255, 0.7),
+      0 0 70px rgba(138, 191, 255, 0.7);
+  }
+
+  100% {
+    text-shadow:
+      0 0 10px rgba(180, 220, 255, 0.18),
+      0 0 30px rgba(120, 140, 255, 0.12);
+  }
+}
+
+/* 
+//////////////////////////////
+// TO BE ANNOUNCED
+//////////////////////////////
+*/
 
 .tba {
   font-size: 2rem;
