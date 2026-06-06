@@ -872,6 +872,10 @@ POPUP
     width: 26rem;
     font-size: 2.6rem;
   }
+
+  .memory-menu-link:hover {
+    font-size: 3rem;
+  }
 }
 
 @media (max-width: 37.5em) {
@@ -920,12 +924,16 @@ POPUP
   }
 
   .memory-title {
-    font-size: 4rem;
+    font-size: 3.7rem;
   }
 
   .memory-menu-link {
     width: 20rem;
     font-size: 2rem;
+  }
+
+  .memory-menu-link:hover {
+    font-size: 2.4rem;
   }
 
   .memory-popup {
@@ -934,5 +942,9 @@ POPUP
 
   .memory-rules-popup {
     width: 90%;
+  }
+
+  .memory-title span {
+    margin-left: 10rem;
   }
 }
